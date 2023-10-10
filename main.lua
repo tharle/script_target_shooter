@@ -1,6 +1,7 @@
 -- Executable
 -- copy /b love.exe+Mygame.love MyGame.exe
 require("scr.modules.Vector")
+require("scr.modules.GameObject")
 require("scr.modules.Target")
 
 ---------------------------------------------------------------
@@ -13,6 +14,8 @@ GAME_STATE_OVER = 2
 
 function  love.load()
     target_1 = Target:new("assets/target.png", Vector:new(50, 50))
+    target_1:setDrawLimitHorizontal(0, 800)
+    target_1:setDrawLimitVertical(0, 600)
 end
 
 ---------------------------------------------------------------

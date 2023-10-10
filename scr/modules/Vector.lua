@@ -29,15 +29,15 @@ end
 
 -- @param vector_b est une variable du type Vector
 function Vector:addtion(vector_b)
-    local result_x = self.x - vector_b.x
-    local result_y = self.y - vector_b.y
+    local result_x = self.x + vector_b.x
+    local result_y = self.y + vector_b.y
 
     return Vector:new(result_x, result_y)
 end
 
 -- @param number cest un numero qui va multiplier dans le vector
-function Vector:multiplication(number)
-    return Vector:new(self.x * number, self.y * number)
+function Vector:multiplication(multplicator)
+    return Vector:new(self.x * multplicator, self.y * multplicator)
 end
 
 function Vector:normalazed()

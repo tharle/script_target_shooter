@@ -1,7 +1,7 @@
--- Meta class
+-- Classe Vector
 local Vector = {}
 Vector.__index = Vector
--- Derived class method new
+
 function Vector.new(x,y)
     local o = {}
     o.x = x
@@ -17,7 +17,7 @@ function Vector:set(x, y)
 end
 
 
- -- @param vector_b est une variable du type Vector
+ -- @param vector_b (table: Vector): vector qui sera subtrai au Vector self
 function Vector:subtraction(vector_b)
     local result_x = self.x - vector_b.x
     local result_y = self.y - vector_b.y
@@ -25,7 +25,7 @@ function Vector:subtraction(vector_b)
     return Vector.new(result_x, result_y)
 end
 
--- @param vector_b est une variable du type Vector
+-- @param vector_b (table: Vector): vector qui sera addicione au Vector self
 function Vector:addtion(vector_b)
     local result_x = self.x + vector_b.x
     local result_y = self.y + vector_b.y
@@ -33,7 +33,7 @@ function Vector:addtion(vector_b)
     return Vector.new(result_x, result_y)
 end
 
--- @param number cest un numero qui va multiplier dans le vector
+-- @param multplicator (number): cest un numero qui va multiplier dans le vector
 function Vector:multiplication(multplicator)
     return Vector.new(self.x * multplicator, self.y * multplicator)
 end
@@ -43,11 +43,16 @@ function Vector:normalazed()
     return Vector.new(self.x/magnitude, self.y/magnitude)
 end
 
+-- @param value (number): vérifier si le value est entre les chiffres x et y
 function Vector:isInLimit(value)
     return value > self.x and value < self.y;
 end
 
 
+
+-- -------------------------------------------------------------------------
+-- CONSTANTS DES VECTORS PRÉDEFINIS
+-- -------------------------------------------------------------------------
 function Vector:Left()
     return Vector.new(-1, 0)
 end

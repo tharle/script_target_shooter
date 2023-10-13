@@ -5,11 +5,10 @@ local GameObject = require("scr.modules.GameObject")
  -- @param scr c'est le chemain pour le le sprite
  -- @param position est une variable du type Vector
 
-local Target = {}
+local Target = setmetatable({}, {__index = GameObject})
 Target.__index = Target
 function Target.new(src_sprite, position)
-    local o = GameObject.new(src_sprite, position)
-    setmetatable(o, Target)
+    local o = setmetatable(GameObject.new(src_sprite, position), Target)
     return o
 end
 

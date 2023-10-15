@@ -3,39 +3,44 @@
 local Vector = require("scr.modules.Vector")
 local GameObject = require("scr.modules.GameObject")
 local Target = require("scr.modules.Target")
+local Background = require("scr.modules.Background")
 
 -- require("scr.modules.Target")
 
 ---------------------------------------------------------------
 --  LOAD
 ---------------------------------------------------------------
-
-GAME_STATE_RUN = 0
-GAME_STATE_MENU = 1
-GAME_STATE_OVER = 2
+scene_game_objects = {}
 
 function  love.load()
-    target_1 = Target.new("assets/target.png", Vector.new(50, 50))
-    target_1:setLimitHorizontal(Vector.new(0, 800))
-    target_1:setLimitVertical(Vector.new(0, 600))
+    local target_1 = Target.new(
+        "assets/target.png",  -- url 
+        Vector.new(220, 220), -- postion
+        Vector:Right():addtion(Vector:Down()), -- direction
+        150, -- velocity
+        Vector.new(100, 700), -- limit horizontal
+        Vector.new(100, 500) -- limit vertical
+    )
+
+    local background_scene = Background.new()
+
+    scene_game_objects = {background_scene, target_1}
 end
 
 ---------------------------------------------------------------
 --  UPDATE
 ---------------------------------------------------------------
 function love.update(dt)
-    calculerTargetPosition(dt)
+    for key, game_object in ipairs(scene_game_objects) do
+        game_object:update(dt)
+    end
 end
-
--- calculer la position de target
-function calculerTargetPosition(dt)
-    target_1:move(dt)
-end
-
 
 ---------------------------------------------------------------
 --  DRAW
 ---------------------------------------------------------------
 function love.draw()
-    target_1:draw()
+    for key, game_object in ipairs(scene_game_objects) do
+        game_object:draw(dt)
+    end
 end

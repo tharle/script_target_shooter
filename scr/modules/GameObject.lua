@@ -31,6 +31,10 @@ end
 ---------------------------------------------------------------
 -- @param dt (number): cest le delta time
 function GameObject:update(dt)
+   self:move(dt)
+end
+
+function GameObject:move(dt)
     local velocityByTime = self.velocity * dt
     local direction_velocity = self.direction:multiplication(velocityByTime)
     self.position = self.position:addtion(direction_velocity)

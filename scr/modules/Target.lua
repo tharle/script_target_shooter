@@ -1,8 +1,6 @@
 local GameObject = require("scr.modules.GameObject")
 local Vector = require("scr.modules.Vector")
 
-
-
 -- Meta data
 local Target = setmetatable({}, {__index = GameObject})
 Target.__index = Target
@@ -33,9 +31,7 @@ end
 -- [Overrite]
 -- @param dt (number) cest le delta time
 function Target:update(dt)
-    local velocityByTime = self.velocity * dt
-    local direction_velocity = self.direction:multiplication(velocityByTime)
-    self.position = self.position:addtion(direction_velocity)
+    self:move(dt)
 
     if not self:isInLimitsScreenHorizontal() then
         self.direction.x = self.direction.x * -1;

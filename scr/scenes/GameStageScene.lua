@@ -91,7 +91,7 @@ end
 function GameStageScene:run(dt)
     self.background:update(dt)
 
-    for key, game_object in ipairs(self.scenario_game_objects) do
+    for key, scenario_game_object in ipairs(self.scenario_game_objects) do
         scenario_game_object:update(dt)
     end
 
@@ -113,7 +113,7 @@ end
 function GameStageScene:draw()
     self.background:draw()
     
-    for key, game_object in ipairs(self.scenario_game_objects) do
+    for key, scenario_game_object in ipairs(self.scenario_game_objects) do
         scenario_game_object:draw()
     end
 

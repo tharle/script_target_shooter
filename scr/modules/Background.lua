@@ -44,7 +44,7 @@ end
 ---------------------------------------------------------------
 function Background:draw()
     for key, sprite in ipairs(self.sprites) do
-        sprite:draw(dt)
+        sprite:draw()
     end
 end
 

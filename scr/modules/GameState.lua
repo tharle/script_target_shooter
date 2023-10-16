@@ -3,7 +3,7 @@ local GameState = {}
 GameState.__index = GameState
 
 -- Classe pour garder les states du jeu
-function GameState.new(GameState)
+function GameState.new()
     local o = {} 
     setmetatable(o, GameState)
 

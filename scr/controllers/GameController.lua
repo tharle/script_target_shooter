@@ -1,4 +1,9 @@
 local GameState = require("scr.modules.GameState")
+local Vector = require("scr.modules.Vector")
+
+CONFIG_TIMER_MAX = 10
+CONFIG_RESOLUTION_WIDTH = 800
+CONFIG_RESOLUTION_HEIGHT = 600
 
 -- Meta class
 local GameController = {}
@@ -10,8 +15,9 @@ function GameController.new()
     setmetatable(o, GameController)     
 
     o.score = 0
-    -- o.game_state = GameState.stateRun()
-    o.game_state = GameState.stateGameOver()
+    o.timer = CONFIG_TIMER_MAX
+    o.game_state = GameState.stateRun()
+    o.resolution = Vector.new(CONFIG_RESOLUTION_WIDTH, CONFIG_RESOLUTION_HEIGHT)
 
     return o
 end

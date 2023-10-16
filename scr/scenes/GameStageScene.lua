@@ -5,6 +5,8 @@ local GameState = require("scr.modules.GameState")
 local Target = require("scr.modules.Target")
 local Background = require("scr.modules.Background")
 
+local GameHud = require("scr.controllers.GameHud")
+
  -- 
  -- 
  -- @param game_controller (table:Vector) referance pour le controlateur du jeu
@@ -13,6 +15,7 @@ GameStageScene.__index = GameStageScene
 function GameStageScene.new(game_controller)
     local o = {} 
     o.game_controller = game_controller
+    o.game_hud = GameHud.new(game_controller)
     o.background = Background.new()
     local tree_1 = GameObject.new("assets/sprites/objects/tree_2.png", Vector.new(25, 365))
     local tree_2 = GameObject.new("assets/sprites/objects/tree_1.png", Vector.new(550, 365))
@@ -95,6 +98,13 @@ function GameStageScene:run(dt)
     for key, target in ipairs(self.targets) do
         target:update(dt)
     end
+
+    self.game_controller.timer = self.game_controller.timer - dt;
+
+    if self.game_controller.timer <= 0 then
+        self.game_controller.timer = 0
+        self.game_controller.game_state = GameState:stateGameOver()
+    end
 end
 
 ---------------------------------------------------------------
@@ -110,6 +120,8 @@ function GameStageScene:draw()
     for key, target in ipairs(self.targets) do
         target:draw()
     end
+
+    self.game_hud:draw()
 end
 
 return GameStageScene

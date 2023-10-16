@@ -14,6 +14,9 @@ local GameController = require("scr.controllers.GameController")
 function  love.load()
     game_controller = GameController.new();
     game_stage_scene = GameStageScene.new(game_controller)
+
+    love.window.setMode(game_controller.resolution.x, game_controller.resolution.y)
+    love.window.setTitle( "MON JEU" )
 end
 
 ---------------------------------------------------------------

@@ -20,7 +20,6 @@ function Target.new(src_sprite, position, direction, velocity, limit_horizontal,
 
     o.limit_horizontal  = limit_horizontal or Vector.new(0, math.huge)
     o.limit_vertical    = limit_vertical or Vector.new(0, math.huge)
-    o.collision_bound   = Vector.new(o.sprite:getWidth(), o.sprite:getHeight())
 
     return o
 end

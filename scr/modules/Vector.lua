@@ -24,6 +24,22 @@ function Vector:addtion(vector_b)
     return Vector.new(result_x, result_y)
 end
 
+function Vector:angleInRadians()
+    local angle = math.atan2(-self.y, self.x)
+    return angle
+end
+
+function Vector:angle()
+    --local angle = math.deg(math.atan2(-self.y, self.x))
+    local angle = math.deg(self:angleInRadians())
+    
+    if angle < 0 then
+        return angle + 360
+    else
+        return angle
+    end
+end
+
 -- @param multplicator (number): cest un numero qui va multiplier dans le vector
 function Vector:multiplication(multplicator)
     return Vector.new(self.x * multplicator, self.y * multplicator)

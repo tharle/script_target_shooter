@@ -4,6 +4,7 @@ local Vector = require("scr.modules.Vector")
 CONFIG_TIMER_MAX = 10
 CONFIG_RESOLUTION_WIDTH = 800
 CONFIG_RESOLUTION_HEIGHT = 600
+CONFIG_GUN_MAGAZINE_SIZE = 5
 
 -- Meta class
 local GameController = {}
@@ -16,6 +17,7 @@ function GameController.new()
 
     o.score = 0
     o.timer = CONFIG_TIMER_MAX
+    o.gun_magazine = CONFIG_GUN_MAGAZINE_SIZE
     o.game_state = GameState.stateRun()
     o.resolution = Vector.new(CONFIG_RESOLUTION_WIDTH, CONFIG_RESOLUTION_HEIGHT)
 
@@ -26,5 +28,8 @@ function GameController:equalsGameState(game_state)
     return self.game_state == game_state
 end
 
+function GameController:reloadGun()
+    self.gun_magazine = CONFIG_GUN_MAGAZINE_SIZE
+end
 
 return GameController

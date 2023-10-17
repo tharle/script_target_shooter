@@ -15,8 +15,10 @@ function GameHud.new(game_controller)
     o.font_color = {1, 1, 1, 1} -- white
     o.font = love.graphics.newFont("assets/fonts/gamer.ttf", 40) -- load de font personalizé
 
-    o.position_score = Vector.new(o.game_controller.resolution.x -150, 20)
-    o.position_timer = Vector.new(o.game_controller.resolution.x/2 - 25, 20)
+    local hud_y = 10;
+    o.position_score = Vector.new(o.game_controller.resolution.x -200, hud_y)
+    o.position_timer = Vector.new(o.game_controller.resolution.x/2 - 25, hud_y)
+    o.position_gun_magazine = Vector.new(10, hud_y)
     -- Balas
 
     return o
@@ -32,10 +34,13 @@ function GameHud:draw()
 
     love.graphics.setFont(self.font) -- set le font pour être utilisé
     love.graphics.setColor(self.font_color);
-    love.graphics.print("score: "..self.game_controller.score, self.position_score.x, self.position_score.y) 
+
+    love.graphics.print("SCORE: "..self.game_controller.score, self.position_score.x, self.position_score.y) 
+    
     local timer = math.floor(self.game_controller.timer)
     love.graphics.print(timer, self.position_timer.x, self.position_timer.y)
 
+    love.graphics.print("SHOT: "..self.game_controller.gun_magazine, self.position_gun_magazine.x, self.position_gun_magazine.y)
     --local invisible_color = {1, 1, 1, 0} -- pour ne pas toucher aux sprites
     --love.graphics.setColor(invisible_color)
 end

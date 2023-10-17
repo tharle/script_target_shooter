@@ -19,49 +19,24 @@ function GameStageScene.new(game_controller)
     o.background = Background.new()
     local tree_1 = GameObject.new("assets/sprites/objects/tree_2.png", Vector.new(25, 365))
     local tree_2 = GameObject.new("assets/sprites/objects/tree_1.png", Vector.new(550, 365))
-
-    --TODO changer ça pour juste une sprite
-    local terrain_1 = GameObject.new("assets/sprites/objects/gras_eath_2.png", Vector.new(0, 565))
-    local terrain_2 = GameObject.new("assets/sprites/objects/gras_eath_2.png", Vector.new(64, 565))
-    local terrain_3 = GameObject.new("assets/sprites/objects/gras_eath_2.png", Vector.new(128, 565))
-    local terrain_4 = GameObject.new("assets/sprites/objects/gras_eath_2.png", Vector.new(192, 565))
-    local terrain_5 = GameObject.new("assets/sprites/objects/gras_eath_2.png", Vector.new(256, 565))
-    local terrain_6 = GameObject.new("assets/sprites/objects/gras_eath_2.png", Vector.new(320, 565))
-    local terrain_7 = GameObject.new("assets/sprites/objects/gras_eath_2.png", Vector.new(384, 565))
-    local terrain_8 = GameObject.new("assets/sprites/objects/gras_eath_2.png", Vector.new(448, 565))
-    local terrain_9 = GameObject.new("assets/sprites/objects/gras_eath_2.png", Vector.new(512, 565))
-    local terrain_10 = GameObject.new("assets/sprites/objects/gras_eath_2.png", Vector.new(576, 565))
-    local terrain_11 = GameObject.new("assets/sprites/objects/gras_eath_2.png", Vector.new(640, 565))
-    local terrain_12 = GameObject.new("assets/sprites/objects/gras_eath_2.png", Vector.new(704, 565))
-    local terrain_13 = GameObject.new("assets/sprites/objects/gras_eath_2.png", Vector.new(768, 565))
+    local terrain = GameObject.new("assets/sprites/objects/gras_eath_all.png", Vector.new(0, 565))
     
     o.scenario_game_objects = { 
-        target_1, 
         tree_1, 
         tree_2,
-        terrain_1,
-        terrain_2,
-        terrain_3,
-        terrain_4,
-        terrain_5,
-        terrain_6,
-        terrain_7,
-        terrain_8,
-        terrain_9,
-        terrain_10,
-        terrain_11,
-        terrain_12,
-        terrain_13
+        terrain
     }
 
     local target_1 = Target.new(
-        "assets/target.png",  -- url 
+        --"assets/target.png",  -- url 
+        nil,
         Vector.new(220, 220), -- postion
         Vector:Right():addtion(Vector:Down()), -- direction
         150, -- velocity
         Vector.new(100, 700), -- limit horizontal
         Vector.new(100, 500) -- limit vertical
     )
+    target_1:setAnimation("assets/sprites/objects/pigeons/pigeons_1_fly.png", 64, 64, 0.5)
     o.targets = {target_1}
 
     o.score = 0
@@ -81,9 +56,8 @@ function GameStageScene:update(dt)
     if game_controller:equalsGameState(GameState:stateMenu()) then
         print "JEU DANS MENU."
     elseif game_controller:equalsGameState(GameState:stateGameOver()) then
-        print "JEU DANS GAME OVER."
+       -- print "JEU DANS GAME OVER."
     else -- GameState:stateRun() or autre game state iconnu
-        print "JEU DANS RUN."
         self:run(dt)
     end
 end
@@ -111,6 +85,16 @@ end
 --  DRAW
 ---------------------------------------------------------------
 function GameStageScene:draw()
+    self:drawStageScreen()
+
+    if game_controller:equalsGameState(GameState:stateMenu()) then
+        self:drawMenuScreen()
+    elseif game_controller:equalsGameState(GameState:stateGameOver()) then
+        self:drawGameOverScreen()
+    end
+end
+
+function GameStageScene:drawStageScreen()
     self.background:draw()
     
     for key, scenario_game_object in ipairs(self.scenario_game_objects) do
@@ -121,7 +105,13 @@ function GameStageScene:draw()
         target:draw()
     end
 
-    self.game_hud:draw()
+   self.game_hud:draw()
+end
+
+function GameStageScene:drawMenuScreen()
+end
+
+function GameStageScene:drawGameOverScreen()
 end
 
 return GameStageScene

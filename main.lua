@@ -1,4 +1,3 @@
-local GameStageScene = require("scr.scenes.GameStageScene")
 local GameController = require("scr.controllers.GameController")
 
 -- Executable
@@ -12,23 +11,19 @@ local GameController = require("scr.controllers.GameController")
 ---------------------------------------------------------------
 
 function  love.load()
-    game_controller = GameController.new();
-    game_stage_scene = GameStageScene.new(game_controller)
-
-    love.window.setMode(game_controller.resolution.x, game_controller.resolution.y)
-    love.window.setTitle( "MON JEU" )
+    game_controller = GameController.new()
 end
 
 ---------------------------------------------------------------
 --  UPDATE
 ---------------------------------------------------------------
 function love.update(dt)
-    game_stage_scene:update(dt)
+    game_controller:update(dt)
 end
 
 ---------------------------------------------------------------
 --  DRAW
 ---------------------------------------------------------------
 function love.draw()
-    game_stage_scene:draw()
+    game_controller:draw()
 end

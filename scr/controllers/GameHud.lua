@@ -5,7 +5,7 @@ local GameHud = {}
 GameHud.__index = GameHud
 
 -- Classe pour afficher et controller le HUD 
- -- @param game_controller (table:Vector) referance pour le controlateur du jeu
+ -- @param game_configuration (table:Vector) referance pour le controlateur du jeu
 function GameHud.new(game_controller)
     local o = {} 
     setmetatable(o, GameHud)
@@ -16,8 +16,9 @@ function GameHud.new(game_controller)
     o.font = love.graphics.newFont("assets/fonts/gamer.ttf", 40) -- load de font personalizé
 
     local hud_y = 10;
-    o.position_score = Vector.new(o.game_controller.resolution.x -200, hud_y)
-    o.position_timer = Vector.new(o.game_controller.resolution.x/2 - 25, hud_y)
+    local resolution = o.game_controller.game_configuration.resolution
+    o.position_score = Vector.new(resolution.x -200, hud_y)
+    o.position_timer = Vector.new(resolution.x/2 - 25, hud_y)
     o.position_gun_magazine = Vector.new(10, hud_y)
     -- Balas
 
@@ -29,8 +30,9 @@ end
 --  DRAW
 ---------------------------------------------------------------
 function GameHud:draw()
+    local game_configuration = self.game_controller.game_configuration
     love.graphics.setColor(self.background_color);
-    love.graphics.rectangle( "fill", 0, 0, self.game_controller.resolution.x, 60 )
+    love.graphics.rectangle( "fill", 0, 0, self.game_controller.game_configuration.resolution.x, 60 )
 
     love.graphics.setFont(self.font) -- set le font pour être utilisé
     love.graphics.setColor(self.font_color);

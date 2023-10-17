@@ -10,13 +10,14 @@
  -- @param width (number) width de chaque sprite animation
  -- @param height (number) height de chaque sprite animation
  -- @param duration (number) duration de chaque animation
- function Animation.new(game_object, scr_sprite_sheet, width, height, duration)
+ function Animation.new(game_object, scr_sprite_sheet, width, height, duration, loop)
     local o = {} 
     setmetatable(o, Animation) 
     o.game_object = game_object
     o.sprite_sheet = love.graphics.newImage(scr_sprite_sheet)
     o.quads = {}
     o.duration = duration or 1
+    o.loop = loop or true
     o.currentTime = 0
     o.sprit_index = 2
     o.angle = 0
@@ -37,12 +38,26 @@
 function Animation:update(dt)
     self.currentTime = self.currentTime + dt
 
+    
     if self.currentTime >= self.duration then
         self.currentTime = self.currentTime - self.duration
     end
+
+    if self.loop or not self:isLastFrameAnimation() then
+        self.sprit_index = math.floor(self.currentTime / self.duration * #self.quads) + 1
+    end
     
-    self.sprit_index = math.floor(self.currentTime / self.duration * #self.quads) + 1
-    self.angle = self.game_object.direction:angleInRadians()
+    if self.game_object and self.game_object.direction then
+        self.angle = self.game_object.direction:angleInRadians()
+    end
+end
+
+function Animation:isLastFrameAnimation()
+    return self.sprit_index == #self.quads
+end
+
+function Animation:restart()
+    self.sprit_index = 1
 end
 
 

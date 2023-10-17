@@ -51,4 +51,12 @@ function Target:isInLimitsScreenVertical()
     return self.limit_vertical:isInLimit(self.position.y, collision_bound_y)
 end
 
+-- @param point (table: Vector) : point de collision
+function Target:isCollide(point)
+    local bounds_horizontal = Vector.new(self.position.x, self.postion.x + self.width)
+    local bounds_vertical = Vector.new(self.position.y, self.postion.y + self.width)
+
+    return bounds_horizontal:isInLimit(point.x) and bounds_vertical:isInLimit(point.y)
+end
+
 return Target

@@ -10,7 +10,7 @@ Player.__index = Player
 --  NEW 
 ---------------------------------------------------------------
 -- Objet utilisé pour controler la sorris
-function Player.new(game_configuration)
+function Player.new(game_controller)
     local o = {} 
     
     o.scr_mouse_animation = ""
@@ -18,7 +18,8 @@ function Player.new(game_configuration)
     o.width = 32
     o.height = 32
     o.animation_mouse = loadMouseAnimation(o)
-    o.game_configuration = game_configuration
+    o.game_controller = game_controller
+    o.isFiring = false
 
     setmetatable(o, Player)  
 
@@ -47,7 +48,7 @@ function Player:update(dt)
         
     --else -- GameState:stateRun() or autre game state iconnu
         self.animation_mouse:update(dt)
-       -- self:onMouseClickTarget()
+        self:onMouseClickTarget()
     --end
 end
 
@@ -55,11 +56,13 @@ function Player:onMouseClickTarget()
 
     if  love.mouse.isDown(1) and not self.isFiring then
         self.isFiring = true
-        if isMouseSurTarget() then
+        local game_objects = self.game_controller:getAllGameObjetCollided()
+        print(#game_objects)
+        --if isMouseSurTarget() then
             -- love.audio.play(hit_audio);
             -- tagertLive = false
             resetTarget()
-        end
+        --end
     elseif not love.mouse.isDown(1) then
         isFiring = false
     end

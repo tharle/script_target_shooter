@@ -44,7 +44,7 @@ function GameController.new()
     target_1:setAnimation("assets/sprites/objects/pigeons/pigeons_1_fly.png", 64, 64, 0.5)
     o.targets = {target_1}
 
-    o.player = Player.new(o.game_configuration)
+    o.player = Player.new(o)
     o.score = 0
     o.timer = o.game_configuration.timer_start
     o.game_state = GameState.stateRun()
@@ -91,8 +91,51 @@ function GameController:run(dt)
 end
 
 function GameController:equalsGameState(game_state)
-    return self.game_state == game_state
+    print(self.game_state)
+    -- return self.game_state == game_state
+    return true
 end
+
+function GameController:isStateRun()
+    return self.equalsGameState(GameState:stateRun())
+end
+
+function GameController:isStateMenu()
+    return self.equalsGameState(GameState:stateMenu())
+end
+
+function GameController:isStateGameOver()
+    return self.equalsGameState(GameState:stateGameOver())
+end
+
+
+
+-- Retourne toute les objets qui sont possible de collider dans le point 
+ -- @param point (table: Vector) : point de collision
+function GameController:getAllGameObjetCollided(point)
+    local game_objects = {}
+
+    if self:isStateRun() then
+        game_objects = self:getAllPigionsInPoint(point)
+    end
+
+    return game_objects
+end
+
+
+-- @param point (table: Vector) : point de collision
+function getAllPigionsInPoint(point)
+    local pigeons_collided = {}
+    local size = 0
+    for key, pigeons in ipairs(self.targets) do
+        if pigeon:isCollide(point) then
+            size = size + 1
+            pigeons_collided[size] = pigeons
+        end
+    end
+
+    return pigeons_collided
+end 
 
 ---------------------------------------------------------------
 --  DRAW

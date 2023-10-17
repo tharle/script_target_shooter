@@ -64,6 +64,10 @@ function Player:onMouseClickTarget()
     end
 end
 
+function Player:isLookingRight()
+    return true
+end
+
 ---------------------------------------------------------------
 --  DRAW
 ---------------------------------------------------------------

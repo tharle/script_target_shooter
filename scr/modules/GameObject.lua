@@ -77,6 +77,10 @@ function GameObject:getCentre()
     return self.centre
 end
 
+function GameObject:isLookingRight()
+    return self.direction.x > 0
+end
+
 ---------------------------------------------------------------
 --  DRAW
 ---------------------------------------------------------------
@@ -84,7 +88,7 @@ function GameObject:draw()
     if self.animation ~= nil then
         self.animation:draw()
         
-        love.graphics.rectangle("line", self.position.x,self.position.y, self.width, self.height)
+        -- love.graphics.rectangle("line", self.position.x,self.position.y, self.width, self.height)
 
     elseif self.sprite ~= nil then
         love.graphics.draw(self.sprite, self.position.x, self.position.y)

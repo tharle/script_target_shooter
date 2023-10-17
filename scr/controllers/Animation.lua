@@ -22,6 +22,10 @@
     o.sprit_index = 2
     o.angle = 0
 
+    -- variables pour fliper le sprite
+    o.scale_x = 1
+    o.offset_x = 0
+
     -- charger les sprites
     for x = 0, o.sprite_sheet:getWidth() - width, width do
         for y = 0, o.sprite_sheet:getHeight() - height, height do
@@ -46,6 +50,16 @@ function Animation:update(dt)
     if self.loop or not self:isLastFrameAnimation() then
         self.sprit_index = math.floor(self.currentTime / self.duration * #self.quads) + 1
     end
+
+
+
+    if self.game_object:isLookingRight() then
+        self.scale_x = 1
+        self.offset_x = 0
+    else
+        self.scale_x = -1
+        self.offset_x = self.game_object.width
+    end 
     
     -- if self.game_object and self.game_object.direction then
        -- self.angle = self.game_object.direction:angleInRadians()
@@ -66,7 +80,8 @@ end
 ---------------------------------------------------------------
 function Animation:draw()
     --love.graphics.draw(self.sprite_sheet, self.quads[self.sprit_index], 0, 0, 0, 4)
-    love.graphics.draw(self.sprite_sheet, self.quads[self.sprit_index], self.game_object.position.x, self.game_object.position.y, 0, 1)
+
+    love.graphics.draw(self.sprite_sheet, self.quads[self.sprit_index], self.game_object.position.x, self.game_object.position.y, 0, self.scale_x, 1, self.offset_x)
 end
 
 return Animation

@@ -47,7 +47,7 @@ function GameController.new()
     o.player = Player.new(o)
     o.score = 0
     o.timer = o.game_configuration.timer_start
-    o.game_state = GameState.stateRun()
+    o.game_state = GameState:stateRun()
     o.gun_magazine = o.game_configuration.gun_magazine_size
 
     setmetatable(o, GameController)     
@@ -60,9 +60,9 @@ end
 ---------------------------------------------------------------
 function GameController:update(dt)
 
-    if self:equalsGameState(GameState:stateMenu()) then
+    if self:isStateMenu() then
         print "JEU DANS MENU."
-    elseif self:equalsGameState(GameState:stateGameOver()) then
+    elseif self:isStateGameOver() then
        -- print "JEU DANS GAME OVER."
     else -- GameState:stateRun() or autre game state iconnu
         self:run(dt)
@@ -90,22 +90,16 @@ function GameController:run(dt)
     end
 end
 
-function GameController:equalsGameState(game_state)
-    print(self.game_state)
-    -- return self.game_state == game_state
-    return true
-end
-
 function GameController:isStateRun()
-    return self.equalsGameState(GameState:stateRun())
+    return self.game_state ==  GameState:stateRun()
 end
 
 function GameController:isStateMenu()
-    return self.equalsGameState(GameState:stateMenu())
+    return self.game_state ==  GameState:stateMenu()
 end
 
 function GameController:isStateGameOver()
-    return self.equalsGameState(GameState:stateGameOver())
+    return self.game_state ==  GameState:stateGameOver()
 end
 
 
@@ -143,9 +137,9 @@ end
 function GameController:draw()
     self:drawStageScreen()
 
-    if self:equalsGameState(GameState:stateMenu()) then
+    if self:isStateMenu() then
         self:drawMenuScreen()
-    elseif self:equalsGameState(GameState:stateGameOver()) then
+    elseif self:isStateGameOver() then
         self:drawGameOverScreen()
     end
 

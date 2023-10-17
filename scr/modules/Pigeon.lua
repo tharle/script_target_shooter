@@ -57,7 +57,13 @@ end
 -- @param point (table: Vector) : point de collision
 function Pigeon:isCollide(point)
     local bounds_horizontal = Vector.new(self.position.x, self.position.x + self.width)
-    local bounds_vertical = Vector.new(self.position.y, self.position.y + self.width)
+    local bounds_vertical = Vector.new(self.position.y, self.position.y + self.height)
+
+    print("Bounds Horizontal")
+    print(bounds_horizontal:toString())
+
+    print("Bounds Vertical")
+    print(bounds_vertical:toString())
 
     return bounds_horizontal:isInLimit(point.x) and bounds_vertical:isInLimit(point.y)
 end

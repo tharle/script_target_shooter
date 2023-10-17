@@ -5,6 +5,7 @@ local Vector = require("scr.modules.Vector")
 local GameObject = {}
 GameObject.__index = GameObject
 
+
 ---------------------------------------------------------------
 --  NEW 
 ---------------------------------------------------------------
@@ -30,8 +31,8 @@ function GameObject.new(src_sprite, position, direction, velocity)
     o.position  = position or Vector:Zero()
     o.direction = direction or Vector:Zero()
     o.velocity  = velocity or 0
-    o.angle     = 0
---    o.animation = nil
+    -- o.angle     = 0
+    
 
     setmetatable(o, GameObject)     
 

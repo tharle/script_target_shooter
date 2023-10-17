@@ -37,11 +37,11 @@ function GameController.new()
         nil,
         Vector.new(220, 220), -- postion
         Vector:Right():addtion(Vector:Down()), -- direction
-        150, -- velocity
+        200, -- velocity
         Vector.new(100, 700), -- limit horizontal
         Vector.new(100, 500) -- limit vertical
     )
-    pigeon_1:setAnimation("assets/sprites/objects/pigeons/pigeons_1_fly.png", 55, 45, 0.5)
+    pigeon_1:setAnimation("assets/sprites/objects/pigeons/pigeons_1_fly.png", 44, 36, 0.5)
     o.pigeons = {pigeon_1}
 
     o.player = Player.new(o)
@@ -128,11 +128,6 @@ function GameController:getAllPigionsInPoint(point)
             size = size + 1
             pigeons_collided[size] = pigeon
         end
-    end
-    print(point:toString())
-    if #pigeons_collided > 0 then
-        print(pigeons_collided[1].position:toString())
-        self.game_state = GameState:stateMenu()
     end
 
     return pigeons_collided

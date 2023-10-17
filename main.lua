@@ -4,7 +4,7 @@ local GameController = require("scr.controllers.GameController")
 -- copy /b love.exe+Mygame.love MyGame.exe
 
 
--- require("scr.modules.Target")
+-- require("scr.modules.Pigeon")
 
 ---------------------------------------------------------------
 --  LOAD

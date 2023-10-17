@@ -2,7 +2,7 @@
 local Background = require("scr.modules.Background")
 local GameObject = require("scr.modules.GameObject")
 local GameState = require("scr.modules.GameState")
-local Target = require("scr.modules.Target")
+local Pigeon = require("scr.modules.Pigeon")
 local Vector = require("scr.modules.Vector")
 
 
@@ -32,8 +32,8 @@ function GameController.new()
         terrain
     }
 
-    local target_1 = Target.new(
-        --"assets/target.png",  -- url 
+    local pigeon_1 = Pigeon.new(
+        --"assets/Pigeon.png",  -- url 
         nil,
         Vector.new(220, 220), -- postion
         Vector:Right():addtion(Vector:Down()), -- direction
@@ -41,8 +41,8 @@ function GameController.new()
         Vector.new(100, 700), -- limit horizontal
         Vector.new(100, 500) -- limit vertical
     )
-    target_1:setAnimation("assets/sprites/objects/pigeons/pigeons_1_fly.png", 64, 64, 0.5)
-    o.targets = {target_1}
+    pigeon_1:setAnimation("assets/sprites/objects/pigeons/pigeons_1_fly.png", 55, 45, 0.5)
+    o.pigeons = {pigeon_1}
 
     o.player = Player.new(o)
     o.score = 0
@@ -61,7 +61,7 @@ end
 function GameController:update(dt)
 
     if self:isStateMenu() then
-        print "JEU DANS MENU."
+       -- print "JEU DANS MENU."
     elseif self:isStateGameOver() then
        -- print "JEU DANS GAME OVER."
     else -- GameState:stateRun() or autre game state iconnu
@@ -78,8 +78,8 @@ function GameController:run(dt)
         scenario_game_object:update(dt)
     end
 
-    for key, target in ipairs(self.targets) do
-        target:update(dt)
+    for key, Pigeon in ipairs(self.pigeons) do
+        Pigeon:update(dt)
     end
 
     self.timer = self.timer - dt;
@@ -118,14 +118,21 @@ end
 
 
 -- @param point (table: Vector) : point de collision
-function getAllPigionsInPoint(point)
+function GameController:getAllPigionsInPoint(point)
     local pigeons_collided = {}
     local size = 0
-    for key, pigeons in ipairs(self.targets) do
+
+    for key, pigeon in ipairs(self.pigeons) do
+        print("Pigeon ["..key.."] -> "..pigeon.position:toString())
         if pigeon:isCollide(point) then
             size = size + 1
-            pigeons_collided[size] = pigeons
+            pigeons_collided[size] = pigeon
         end
+    end
+    print(point:toString())
+    if #pigeons_collided > 0 then
+        print(pigeons_collided[1].position:toString())
+        self.game_state = GameState:stateMenu()
     end
 
     return pigeons_collided
@@ -153,8 +160,8 @@ function GameController:drawStageScreen()
         scenario_game_object:draw()
     end
 
-    for key, target in ipairs(self.targets) do
-        target:draw()
+    for key, Pigeon in ipairs(self.pigeons) do
+        Pigeon:draw()
     end
 
    self.game_hud:draw()

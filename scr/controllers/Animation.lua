@@ -47,9 +47,9 @@ function Animation:update(dt)
         self.sprit_index = math.floor(self.currentTime / self.duration * #self.quads) + 1
     end
     
-    if self.game_object and self.game_object.direction then
-        self.angle = self.game_object.direction:angleInRadians()
-    end
+    -- if self.game_object and self.game_object.direction then
+       -- self.angle = self.game_object.direction:angleInRadians()
+    -- end
 end
 
 function Animation:isLastFrameAnimation()
@@ -66,7 +66,7 @@ end
 ---------------------------------------------------------------
 function Animation:draw()
     --love.graphics.draw(self.sprite_sheet, self.quads[self.sprit_index], 0, 0, 0, 4)
-    love.graphics.draw(self.sprite_sheet, self.quads[self.sprit_index], self.game_object.position.x, self.game_object.position.y, -self.angle, 1)
+    love.graphics.draw(self.sprite_sheet, self.quads[self.sprit_index], self.game_object.position.x, self.game_object.position.y, 0, 1)
 end
 
 return Animation

@@ -1,2 +1,2 @@
-# script_target_shooter
+# script_Pigeon_shooter
 Travail pour le cours de programmation jeu video

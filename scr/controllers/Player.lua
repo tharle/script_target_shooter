@@ -48,23 +48,23 @@ function Player:update(dt)
         
     --else -- GameState:stateRun() or autre game state iconnu
         self.animation_mouse:update(dt)
-        self:onMouseClickTarget()
+        self:onMouseClickPigeon()
     --end
 end
 
-function Player:onMouseClickTarget()
+function Player:onMouseClickPigeon()
 
     if  love.mouse.isDown(1) and not self.isFiring then
         self.isFiring = true
-        local game_objects = self.game_controller:getAllGameObjetCollided()
+        local game_objects = self.game_controller:getAllGameObjetCollided(self.position)
         print(#game_objects)
-        --if isMouseSurTarget() then
+        --if isMouseSurPigeon() then
             -- love.audio.play(hit_audio);
             -- tagertLive = false
-            resetTarget()
+            --resetPigeon()
         --end
     elseif not love.mouse.isDown(1) then
-        isFiring = false
+        self.isFiring = false
     end
 end
 

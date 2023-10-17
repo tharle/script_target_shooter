@@ -16,7 +16,7 @@ function GameConfiguration.new()
     setmetatable(o, GameConfiguration)     
 
     o.title = "MON JEU"
-    o.timer_start = 10
+    o.timer_start = 40
     o.gun_magazine_size = 5
     o.resolution = Vector.new(CONFIG_RESOLUTION_WIDTH, CONFIG_RESOLUTION_HEIGHT)
 

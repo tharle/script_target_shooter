@@ -32,7 +32,6 @@ function GameObject.new(src_sprite, position, direction, velocity)
     o.direction = direction or Vector:Zero()
     o.velocity  = velocity or 0
     -- o.angle     = 0
-    
 
     setmetatable(o, GameObject)     
 
@@ -85,11 +84,12 @@ end
 --  DRAW
 ---------------------------------------------------------------
 function GameObject:draw()
+    self:drawSprite()
+end
+
+function GameObject:drawSprite()
     if self.animation ~= nil then
         self.animation:draw()
-        
-        -- love.graphics.rectangle("line", self.position.x,self.position.y, self.width, self.height)
-
     elseif self.sprite ~= nil then
         love.graphics.draw(self.sprite, self.position.x, self.position.y)
     end

@@ -15,9 +15,10 @@ Pigeon.__index = Pigeon
  -- @param velocity (number): valeur en pixel par frame qui le objet si deplace
  -- @param limit_horizontal (table:Vector): limit horizontal du object (il ne peut pas passer ça)
  -- @param limit_vertical (table:Vector): limit horizontal du object (il ne peut pas passer ça)
-function Pigeon.new(src_sprite, position, direction, velocity, limit_horizontal, limit_vertical)
-    local o = setmetatable(GameObject.new(src_sprite, position, direction, velocity), Pigeon)
+function Pigeon.new(index, position, direction, velocity, limit_horizontal, limit_vertical)
+    local o = setmetatable(GameObject.new(nil, position, direction, velocity), Pigeon)
 
+    o.index = index
     o.limit_horizontal  = limit_horizontal or Vector.new(0, math.huge)
     o.limit_vertical    = limit_vertical or Vector.new(0, math.huge)
     o.free = true
@@ -68,10 +69,20 @@ function Pigeon:isCollide(point)
     return bounds_horizontal:isInLimit(point.x) and bounds_vertical:isInLimit(point.y)
 end
 
-function Pigeon:isCapturated(position_in_cage)
+function Pigeon:setCapturated(position_in_cage)
     self.position = position_in_cage
     self.free = false
     self.direction = Vector:Right()
+end
+
+
+
+---------------------------------------------------------------
+--  DRAW
+---------------------------------------------------------------
+function Pigeon:draw()
+    self:drawSprite()
+    -- love.graphics.rectangle("line", self.position.x,self.position.y, self.width, self.height)
 end
 
 return Pigeon

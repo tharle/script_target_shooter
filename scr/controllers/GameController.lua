@@ -1,5 +1,5 @@
--- Meta class
 local Background = require("scr.modules.Background")
+local Cage = require("scr.modules.Cage")
 local GameObject = require("scr.modules.GameObject")
 local GameState = require("scr.modules.GameState")
 local Pigeon = require("scr.modules.Pigeon")
@@ -10,11 +10,13 @@ local GameConfiguration = require("scr.controllers.GameConfiguration")
 local GameHud = require("scr.controllers.GameHud")
 local Player = require("scr.controllers.Player")
 
- -- 
- -- 
- -- @param game_configuration (table:Vector) referance pour le controlateur du jeu
+-- Meta class
 local GameController = {}
 GameController.__index = GameController
+
+-- 
+ -- 
+ -- @param game_configuration (table:Vector) referance pour le controlateur du jeu
 function GameController.new()
     local o = {} 
     
@@ -33,8 +35,7 @@ function GameController.new()
     }
 
     local pigeon_1 = Pigeon.new(
-        --"assets/Pigeon.png",  -- url 
-        nil,
+        1, -- index
         Vector.new(220, 220), -- postion
         Vector:Right():addtion(Vector:Down()), -- direction
         200, -- velocity
@@ -45,6 +46,7 @@ function GameController.new()
     o.pigeons = {pigeon_1}
 
     o.player = Player.new(o)
+    o.cage = Cage.new(nil, Vector.new(300, 300));
     o.score = 0
     o.timer = o.game_configuration.timer_start
     o.game_state = GameState:stateRun()
@@ -78,8 +80,8 @@ function GameController:run(dt)
         scenario_game_object:update(dt)
     end
 
-    for key, Pigeon in ipairs(self.pigeons) do
-        Pigeon:update(dt)
+    for key, pigeon in ipairs(self.pigeons) do
+        pigeon:update(dt)
     end
 
     self.timer = self.timer - dt;
@@ -103,19 +105,17 @@ function GameController:isStateGameOver()
 end
 
 
-
--- Retourne toute les objets qui sont possible de collider dans le point 
- -- @param point (table: Vector) : point de collision
-function GameController:getAllGameObjetCollided(point)
-    local game_objects = {}
-
+function GameController:tryAndGetPigeon(point)
     if self:isStateRun() then
-        game_objects = self:getAllPigionsInPoint(point)
+        local pigeons = self:getAllPigionsInPoint(point)
+
+        if #pigeons > 0 then
+            local pigeon = pigeons[1]
+            pigeon = table.remove(self.pigeons, pigeon.index)
+            self.cage:addPiegon(pigeon)
+        end
     end
-
-    return game_objects
 end
-
 
 -- @param point (table: Vector) : point de collision
 function GameController:getAllPigionsInPoint(point)
@@ -155,10 +155,11 @@ function GameController:drawStageScreen()
         scenario_game_object:draw()
     end
 
-    for key, Pigeon in ipairs(self.pigeons) do
-        Pigeon:draw()
+    for key, pigeon in ipairs(self.pigeons) do
+        pigeon:draw()
     end
 
+    self.cage:draw()
    self.game_hud:draw()
 end
 

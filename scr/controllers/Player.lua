@@ -57,8 +57,7 @@ function Player:onMouseClickTarget()
     if  love.mouse.isDown(1) and not self.isFiring then
         self.isFiring = true
         local x, y = love.mouse.getPosition()
-        local game_objects = self.game_controller:getAllGameObjetCollided(Vector.new(x, y))
-        print(#game_objects)
+        self.game_controller:tryAndGetPigeon(Vector.new(x, y))
     elseif not love.mouse.isDown(1) then
         self.isFiring = false
     end
@@ -72,7 +71,6 @@ end
 --  DRAW
 ---------------------------------------------------------------
 function Player:draw()
-    
     --if game_configuration:equalsGameState(GameState:stateMenu()) then
         
     --else -- GameState:stateRun() or autre game state iconnu

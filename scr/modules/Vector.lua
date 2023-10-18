@@ -40,6 +40,13 @@ function Vector:angle()
     end
 end
 
+function Vector:randomVector(vector_bounds_x, vector_bounds_y)
+    local x = math.random(vector_bounds_x.x, vector_bounds_x.y)
+    local y = math.random(vector_bounds_y.x, vector_bounds_y.y)
+    
+    return Vector.new(x, y)
+end
+
 -- @param multplicator (number): cest un numero qui va multiplier dans le vector
 function Vector:multiplication(multplicator)
     return Vector.new(self.x * multplicator, self.y * multplicator)

@@ -1,4 +1,5 @@
 local Vector = require("scr.modules.Vector")
+local GameObject = require("scr.modules.GameObject")
 
 -- Meta class
 local GameHud = {}
@@ -17,12 +18,24 @@ function GameHud.new(game_controller)
 
     local hud_y = 10;
     local resolution = o.game_controller.game_configuration.resolution
-    o.position_score = Vector.new(resolution.x -200, hud_y)
+    o.position_score = Vector.new(resolution.x -100, hud_y)
     o.position_timer = Vector.new(resolution.x/2 - 25, hud_y)
-    o.position_gun_magazine = Vector.new(10, hud_y)
-    -- Balas
+
+    o.pigeon_score = GameObject.new()
+    o.pigeon_score.position = Vector.new(resolution.x -144, hud_y)
+    local pigeon_width = 46
+    local pigeon_height = 30
+    local velocity_animation = 0.5
+    o.pigeon_score:setAnimation("assets/sprites/objects/pigeons/pigeon_wink.png", pigeon_width, pigeon_height, velocity_animation)
 
     return o
+end
+
+
+---------------------------------------------------
+
+function GameHud:update(dt)
+    self.pigeon_score:draw(dt)-- animation
 end
 
 
@@ -37,12 +50,12 @@ function GameHud:draw()
     love.graphics.setFont(self.font) -- set le font pour être utilisé
     love.graphics.setColor(self.font_color);
 
-    love.graphics.print("SCORE: "..self.game_controller.score, self.position_score.x, self.position_score.y) 
+    self.pigeon_score:draw()
+    love.graphics.print(" x "..#self.game_controller.cage.pigeons, self.position_score.x, self.position_score.y) 
     
     local timer = math.floor(self.game_controller.timer)
     love.graphics.print(timer, self.position_timer.x, self.position_timer.y)
 
-    love.graphics.print("SHOT: "..self.game_controller.gun_magazine, self.position_gun_magazine.x, self.position_gun_magazine.y)
     --local invisible_color = {1, 1, 1, 0} -- pour ne pas toucher aux sprites
     --love.graphics.setColor(invisible_color)
 end

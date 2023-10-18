@@ -24,6 +24,8 @@ function GameConfiguration.new()
     love.window.setMode(CONFIG_RESOLUTION_WIDTH, CONFIG_RESOLUTION_HEIGHT)
     love.window.setTitle( o.title )
 
+    math.randomseed( os.time() )
+
     return o
 end
 

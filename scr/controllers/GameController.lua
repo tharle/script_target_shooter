@@ -34,6 +34,9 @@ function GameController.new()
         terrain
     }
 
+    local pigeon_width = 44
+    local pigeon_height = 36
+    local velocity_animation = 0.5
     local pigeon_1 = Pigeon.new(
         1, -- index
         Vector.new(220, 220), -- postion
@@ -42,11 +45,22 @@ function GameController.new()
         Vector.new(100, 700), -- limit horizontal
         Vector.new(100, 500) -- limit vertical
     )
-    pigeon_1:setAnimation("assets/sprites/objects/pigeons/pigeons_1_fly.png", 44, 36, 0.5)
-    o.pigeons = {pigeon_1}
+    pigeon_1:setAnimation("assets/sprites/objects/pigeons/pigeon_fly_1.png", pigeon_width, pigeon_height, velocity_animation)
+
+    
+    local pigeon_2 = Pigeon.new(
+        1, -- index
+        Vector.new(100, 150), -- postion
+        Vector:Left():addtion(Vector:Down()), -- direction
+        100, -- velocity
+        Vector.new(100, 700), -- limit horizontal
+        Vector.new(100, 500) -- limit vertical
+    )
+    pigeon_2:setAnimation("assets/sprites/objects/pigeons/pigeon_fly_1.png", pigeon_width, pigeon_height, velocity_animation)
+    o.pigeons = {pigeon_1, pigeon_2}
 
     o.player = Player.new(o)
-    o.cage = Cage.new(nil, Vector.new(300, 300));
+    o.cage = Cage.new(Vector.new(300, 450), pigeon_width, pigeon_height);
     o.score = 0
     o.timer = o.game_configuration.timer_start
     o.game_state = GameState:stateRun()
@@ -75,6 +89,7 @@ end
 
 function GameController:run(dt)
     self.background:update(dt)
+    self.game_hud:update(dt)
 
     for key, scenario_game_object in ipairs(self.scenario_game_objects) do
         scenario_game_object:update(dt)
@@ -155,11 +170,12 @@ function GameController:drawStageScreen()
         scenario_game_object:draw()
     end
 
+    self.cage:draw()
+
     for key, pigeon in ipairs(self.pigeons) do
         pigeon:draw()
     end
 
-    self.cage:draw()
    self.game_hud:draw()
 end
 

@@ -17,7 +17,6 @@ function PigeonFactory.new(game_configuration)
 end
 
 function PigeonFactory:create()
-    -- "assets/sprites/objects/pigeons/pigeon_fly_"..type_pigeon..".png", 
     local scr_sprite_animation = self:getRandomSpritePigeon()
     local position = self:getRadomPosition()
     local direction = self:getRandomDirection()

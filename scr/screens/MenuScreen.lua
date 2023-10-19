@@ -35,6 +35,10 @@ function MenuScreen:loadMouseAnimation(object)
     return Animation.new(object, scr_sprite_sheet, object.width, object.height, duration)
 end
 
+---------------------------------------------------------------
+--  UPDATE
+---------------------------------------------------------------
+
 function MenuScreen:update(dt)
     local x, y = love.mouse.getPosition()
     x = x - self.width / 2
@@ -51,6 +55,10 @@ function MenuScreen:isLookingRight()
     return true
 end
 
+---------------------------------------------------------------
+--  DRAW
+---------------------------------------------------------------
+
 function MenuScreen:draw()
     self.background_paralax:draw()
     self.background_menu:draw()
@@ -62,6 +70,7 @@ function MenuScreen:draw()
     love.graphics.setFont(self.body_font)
     
     love.graphics.print("- Press any key to start -", 270, 380)
+    love.graphics.print("- Press ESC to QUIT -", 290, 410)
     self.animation_mouse:draw()
 end
 

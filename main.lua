@@ -55,6 +55,10 @@ end
 ---------------------------------------------------------------
 function love.keypressed(key, scancode, isrepeat)
     if isStateMenu() then
+        if key == "escape" then
+            love.event.quit()
+        end
+
         game_state = GameState:stateRun()
         startGame()
     end
@@ -73,5 +77,4 @@ function love.draw()
     else
         game_controller:draw()
     end
-
 end

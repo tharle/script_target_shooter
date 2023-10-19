@@ -72,12 +72,6 @@ function Pigeon:isCollide(point)
     local bounds_horizontal = Vector.new(self.position.x, self.position.x + self.width)
     local bounds_vertical = Vector.new(self.position.y, self.position.y + self.height)
 
-    print("Bounds Horizontal")
-    print(bounds_horizontal:toString())
-
-    print("Bounds Vertical")
-    print(bounds_vertical:toString())
-
     return bounds_horizontal:isInLimit(point.x) == 0 and bounds_vertical:isInLimit(point.y) == 0
 end
 
@@ -94,9 +88,11 @@ end
 ---------------------------------------------------------------
 function Pigeon:draw()
     self:drawSprite()
-    -- love.graphics.rectangle("line", self.position.x,self.position.y, self.width, self.height)
-    local vector_direction = self.direction:multiplication(20):addtion(self.position)
-    love.graphics.arrow(self.position.x, self.position.y, vector_direction.x, vector_direction.y, 5, .5)
+    if mode_debug then
+        love.graphics.rectangle("line", self.position.x,self.position.y, self.width, self.height)
+        local vector_direction = self.direction:multiplication(20):addtion(self.position)
+        love.graphics.arrow(self.position.x, self.position.y, vector_direction.x, vector_direction.y, 5, .5)
+    end
 end
 
 return Pigeon

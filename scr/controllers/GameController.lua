@@ -114,7 +114,6 @@ function GameController:getAllPigionsInPoint(point)
     local size = 0
 
     for key, pigeon in ipairs(self.pigeons) do
-        print("Pigeon ["..key.."] -> "..pigeon.position:toString())
         if pigeon:isCollide(point) then
             size = size + 1
             pigeons_collided[size] = pigeon

@@ -13,6 +13,8 @@ local GameState = require("scr.modules.GameState")
 --  LOAD
 ---------------------------------------------------------------
 
+mode_debug = false -- si vous vouler voir les direction de chaque pigeon, il faut mettre ici a true
+
 function  love.load()
     game_state = GameState:stateMenu()
     menu_screen = MenuScreen.new()

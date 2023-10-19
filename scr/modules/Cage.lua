@@ -51,7 +51,7 @@ function Cage:draw()
         pigeon:draw()
     end
     self.cage_front:draw()
-    love.graphics.rectangle("line", self.bounds_horizontal.x,self.bounds_vertical.x, self.cage_front.width, self.cage_front.height)
+    --love.graphics.rectangle("line", self.bounds_horizontal.x,self.bounds_vertical.x, self.cage_front.width, self.cage_front.height)
 end
 
 return Cage

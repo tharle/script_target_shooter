@@ -54,9 +54,19 @@ end
 
 -- @param valueMin (number): vérifier si la valueMin est plus grand que x
 -- @param valueMax (number): vérifier si la valueMax est plus petite que y
+-- @return (number) 0: si equal; 1: si plus grand max; -1: si plus petit que le min
 function Vector:isInLimit(valueMin, valueMax)
     valueMax = valueMax or valueMin
-    return valueMin > self.x and valueMax < self.y;
+    
+    if valueMin < self.x then
+        return -1
+    end
+
+    if valueMax > self.y then
+        return 1
+    end
+
+    return 0
 end
 
 function Vector:normalazed()

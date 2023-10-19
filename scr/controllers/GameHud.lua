@@ -13,11 +13,13 @@ function GameHud.new(game_controller)
 
     o.game_controller = game_controller
     o.background_color = {0, 0, 0, 1} -- black
+    local font_size = 40
     o.font_color = {1, 1, 1, 1} -- white
-    o.font = love.graphics.newFont("assets/fonts/gamer.ttf", 40) -- load de font personalizé
+    o.font = love.graphics.newFont("assets/fonts/gamer.ttf", font_size) -- load de font personalizé
 
-    local hud_y = 10;
+    local hud_y = game_controller.game_configuration.resolution_hud.y - font_size;
     local resolution = o.game_controller.game_configuration.resolution
+    o.position_level = Vector.new(25, hud_y) 
     o.position_score = Vector.new(resolution.x -100, hud_y)
     o.position_timer = Vector.new(resolution.x/2 - 25, hud_y)
 
@@ -45,10 +47,13 @@ end
 function GameHud:draw()
     local game_configuration = self.game_controller.game_configuration
     love.graphics.setColor(self.background_color);
-    love.graphics.rectangle( "fill", 0, 0, self.game_controller.game_configuration.resolution.x, 60 )
+    love.graphics.rectangle( "fill", 0, 0, self.game_controller.game_configuration.resolution_hud.x, self.game_controller.game_configuration.resolution_hud.y )
 
     love.graphics.setFont(self.font) -- set le font pour être utilisé
     love.graphics.setColor(self.font_color);
+
+    self.pigeon_score:draw()
+    love.graphics.print(" Level "..self.game_controller.game_configuration.level, self.position_level.x, self.position_level.y) 
 
     self.pigeon_score:draw()
     love.graphics.print(" x "..#self.game_controller.cage.pigeons, self.position_score.x, self.position_score.y) 

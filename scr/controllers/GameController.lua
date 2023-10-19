@@ -2,13 +2,13 @@ local Background = require("scr.modules.Background")
 local Cage = require("scr.modules.Cage")
 local GameObject = require("scr.modules.GameObject")
 local GameState = require("scr.modules.GameState")
-local Pigeon = require("scr.modules.Pigeon")
 local Vector = require("scr.modules.Vector")
 
 
 local GameConfiguration = require("scr.controllers.GameConfiguration")
 local GameHud = require("scr.controllers.GameHud")
 local Player = require("scr.controllers.Player")
+local SpawnerPigeons = require("scr.controllers.SpawnerPigeons")
 
 -- Meta class
 local GameController = {}
@@ -34,33 +34,12 @@ function GameController.new()
         terrain
     }
 
-    local pigeon_width = 44
-    local pigeon_height = 36
-    local velocity_animation = 0.5
-    local pigeon_1 = Pigeon.new(
-        1, -- index
-        Vector.new(220, 220), -- postion
-        Vector:Right():addtion(Vector:Down()), -- direction
-        200, -- velocity
-        Vector.new(100, 700), -- limit horizontal
-        Vector.new(100, 500) -- limit vertical
-    )
-    pigeon_1:setAnimation("assets/sprites/objects/pigeons/pigeon_fly_1.png", pigeon_width, pigeon_height, velocity_animation)
-
+    o.spawner_pigeons = SpawnerPigeons.new(o.game_configuration)
+    o.pigeons = o.spawner_pigeons:spwan()
     
-    local pigeon_2 = Pigeon.new(
-        1, -- index
-        Vector.new(100, 150), -- postion
-        Vector:Left():addtion(Vector:Down()), -- direction
-        100, -- velocity
-        Vector.new(100, 700), -- limit horizontal
-        Vector.new(100, 500) -- limit vertical
-    )
-    pigeon_2:setAnimation("assets/sprites/objects/pigeons/pigeon_fly_1.png", pigeon_width, pigeon_height, velocity_animation)
-    o.pigeons = {pigeon_1, pigeon_2}
 
     o.player = Player.new(o)
-    o.cage = Cage.new(Vector.new(300, 450), pigeon_width, pigeon_height);
+    o.cage = Cage.new(Vector.new(300, 450), o.game_configuration.pigeon_width, o.game_configuration.pigeon_height);
     o.score = 0
     o.timer = o.game_configuration.timer_start
     o.game_state = GameState:stateRun()
@@ -161,11 +140,17 @@ function GameController:draw()
     end
 
     self.player:draw()
+    --
+    local bounds_horizontal = self.game_configuration.limit_horizontal
+    local bounds_vertical = self.game_configuration.limit_vertical
+    local width =  bounds_horizontal.y - bounds_horizontal.x
+    local height = bounds_vertical.y - bounds_vertical.x
+    love.graphics.rectangle("line", bounds_horizontal.x, bounds_vertical.x, width, height)
 end
 
 function GameController:drawStageScreen()
     self.background:draw()
-    
+
     for key, scenario_game_object in ipairs(self.scenario_game_objects) do
         scenario_game_object:draw()
     end
@@ -176,7 +161,7 @@ function GameController:drawStageScreen()
         pigeon:draw()
     end
 
-   self.game_hud:draw()
+    self.game_hud:draw()
 end
 
 function GameController:drawMenuScreen()

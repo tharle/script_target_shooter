@@ -56,6 +56,10 @@ function love.keypressed(key, scancode, isrepeat)
         game_state = GameState:stateRun()
         startGame()
     end
+
+    if isStateGameOver() then
+        game_state = GameState:stateMenu()
+    end
 end
 
 ---------------------------------------------------------------

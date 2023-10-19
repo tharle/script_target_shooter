@@ -35,7 +35,6 @@ function GameController.new(game_configuration)
         tree_2,
         terrain
     }
-
     o.spawner_pigeons = SpawnerPigeons.new(o.game_configuration)
     o.pigeons = o.spawner_pigeons:spwan()
     
@@ -43,6 +42,7 @@ function GameController.new(game_configuration)
     o.player = Player.new(o)
     o.cage = Cage.new(Vector.new(300, 450), o.game_configuration.pigeon_width, o.game_configuration.pigeon_height);
     o.timer = o.game_configuration.timer_start
+    o.miss_click = 0
     
 
     o.game_over_screen = GameOverScreen.new(o)
@@ -59,8 +59,6 @@ function GameController:update(dt)
 
     if isStateRun() then
         self:run(dt)
-    elseif isStateGameOver() then
-       self.game_over_screen:update(dt)
     end
     
     self.player:update(dt)
@@ -95,8 +93,19 @@ function GameController:tryAndGetPigeon(point)
             local pigeon = pigeons[1]
             pigeon = table.remove(self.pigeons, pigeon.index)
             self.cage:addPiegon(pigeon)
+        else
+            self.miss_click = self.miss_click + 1
+        end
+
+        if #self.pigeons == 0 then
+            self:newLevel()
         end
     end
+end
+
+function GameController:newLevel()
+    self.game_configuration.level = self.game_configuration.level + 1
+    self.pigeons = self.spawner_pigeons:spwan()
 end
 
 -- @param point (table: Vector) : point de collision
@@ -113,7 +122,13 @@ function GameController:getAllPigionsInPoint(point)
     end
 
     return pigeons_collided
-end 
+end
+
+function GameController:getFinalScore()
+    local score_pigeon = #self.cage.pigeons * self.game_configuration.pigeon_value
+    local score_miss = self.miss_click * self.game_configuration.miss_value
+    return score_pigeon - score_miss
+end
 
 ---------------------------------------------------------------
 --  DRAW
@@ -131,7 +146,7 @@ function GameController:draw()
     local bounds_vertical = self.game_configuration.limit_vertical
     local width =  bounds_horizontal.y - bounds_horizontal.x
     local height = bounds_vertical.y - bounds_vertical.x
-    love.graphics.rectangle("line", bounds_horizontal.x, bounds_vertical.x, width, height)
+    -- love.graphics.rectangle("line", bounds_horizontal.x, bounds_vertical.x, width, height)
 end
 
 function GameController:drawStageScreen()

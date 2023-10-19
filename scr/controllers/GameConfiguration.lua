@@ -17,7 +17,6 @@ function GameConfiguration.new()
     o.title = "CATCH THE PIGEON V0.0.0.2"
     o.level = 1
     o.timer_start = 30
-    o.gun_magazine_size = 5
     o.resolution = Vector.new(CONFIG_RESOLUTION_WIDTH, CONFIG_RESOLUTION_HEIGHT)
     o.resolution_hud = Vector.new(CONFIG_RESOLUTION_WIDTH, 50)
     o.limit_horizontal = Vector.new(0, CONFIG_RESOLUTION_WIDTH) -- limit horizontal
@@ -31,6 +30,8 @@ function GameConfiguration.new()
     o.pigeon_bounds_vertical = Vector.new(300, 300)
     o.pigeon_limit_velocity = Vector.new(20, 50)
     o.pigeon_src_sprite = "assets/sprites/objects/pigeons/pigeon_fly_"
+    o.pigeon_value = 50
+    o.miss_value = 5
 
 
     

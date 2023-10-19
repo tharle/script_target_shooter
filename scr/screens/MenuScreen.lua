@@ -28,7 +28,7 @@ function MenuScreen.new()
 end
 
 function MenuScreen:loadMouseAnimation(object)
-    local scr_sprite_sheet = "assets/sprites/objects/pigeons/pigeon_fly_1.png"
+    local scr_sprite_sheet = "assets/sprites/menu/mouse.png"
     local newimage = love.graphics.newImage(scr_sprite_sheet)
     local duration = 1
     love.mouse.setVisible(false)
@@ -61,7 +61,7 @@ function MenuScreen:draw()
 
     love.graphics.setFont(self.body_font)
     
-    love.graphics.print("- Press enter to start -", 270, 380)
+    love.graphics.print("- Press any key to start -", 270, 380)
     self.animation_mouse:draw()
 end
 

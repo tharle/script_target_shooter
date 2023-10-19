@@ -1,3 +1,4 @@
+require("scr.libs.arrow") -- pour le debug
 local GameObject = require("scr.modules.GameObject")
 local Vector = require("scr.modules.Vector")
 
@@ -94,6 +95,8 @@ end
 function Pigeon:draw()
     self:drawSprite()
     -- love.graphics.rectangle("line", self.position.x,self.position.y, self.width, self.height)
+    local vector_direction = self.direction:multiplication(20):addtion(self.position)
+    love.graphics.arrow(self.position.x, self.position.y, vector_direction.x, vector_direction.y, 5, .5)
 end
 
 return Pigeon

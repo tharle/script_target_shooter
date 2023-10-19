@@ -17,7 +17,7 @@ function Player.new(game_controller)
     o.position = Vector:Zero()
     o.width = 32
     o.height = 32
-    o.animation_mouse = loadMouseAnimation(o)
+    o.animation_mouse = Player:loadMouseAnimation(o)
     o.game_controller = game_controller
     o.isFiring = false
 
@@ -26,7 +26,7 @@ function Player.new(game_controller)
     return o
 end
 
-function loadMouseAnimation(object)
+function Player:loadMouseAnimation(object)
     local scr_sprite_sheet = "assets/sprites/objects/cross-mouse.png"
     local duration = 1
     love.mouse.setVisible(false)

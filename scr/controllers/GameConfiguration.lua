@@ -1,4 +1,3 @@
-local GameState = require("scr.modules.GameState")
 local Vector = require("scr.modules.Vector")
 
 CONFIG_TIMER_MAX = 10
@@ -15,9 +14,9 @@ function GameConfiguration.new()
     local o = {} 
     setmetatable(o, GameConfiguration)     
 
-    o.title = "CATH THE PIGEON"
-    o.level = 5
-    o.timer_start = 1
+    o.title = "CATCH THE PIGEON V0.0.0.2"
+    o.level = 1
+    o.timer_start = 30
     o.gun_magazine_size = 5
     o.resolution = Vector.new(CONFIG_RESOLUTION_WIDTH, CONFIG_RESOLUTION_HEIGHT)
     o.resolution_hud = Vector.new(CONFIG_RESOLUTION_WIDTH, 50)

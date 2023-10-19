@@ -19,10 +19,10 @@ GameController.__index = GameController
 -- 
  -- 
  -- @param game_configuration (table:Vector) referance pour le controlateur du jeu
-function GameController.new()
+function GameController.new(game_configuration)
     local o = {} 
     
-    o.game_configuration = GameConfiguration.new();
+    o.game_configuration = game_configuration
     o.game_hud = GameHud.new(o)
     o.background = Background.new()
     local tree_1 = GameObject.new("assets/sprites/objects/tree_2.png", Vector.new(25, 365))
@@ -43,7 +43,7 @@ function GameController.new()
     o.player = Player.new(o)
     o.cage = Cage.new(Vector.new(300, 450), o.game_configuration.pigeon_width, o.game_configuration.pigeon_height);
     o.timer = o.game_configuration.timer_start
-    o.game_state = GameState:stateRun()
+    
 
     o.game_over_screen = GameOverScreen.new(o)
 
@@ -57,12 +57,10 @@ end
 ---------------------------------------------------------------
 function GameController:update(dt)
 
-    if self:isStateMenu() then
-       -- print "JEU DANS MENU."
-    elseif self:isStateGameOver() then
-       -- print "JEU DANS GAME OVER."
-    else -- GameState:stateRun() or autre game state iconnu
+    if isStateRun() then
         self:run(dt)
+    elseif isStateGameOver() then
+       self.game_over_screen:update(dt)
     end
     
     self.player:update(dt)
@@ -84,25 +82,13 @@ function GameController:run(dt)
 
     if self.timer <= 0 then
         self.timer = 0
-        self.game_state = GameState:stateGameOver()
+        game_state = GameState:stateGameOver()
     end
-end
-
-function GameController:isStateRun()
-    return self.game_state ==  GameState:stateRun()
-end
-
-function GameController:isStateMenu()
-    return self.game_state ==  GameState:stateMenu()
-end
-
-function GameController:isStateGameOver()
-    return self.game_state ==  GameState:stateGameOver()
 end
 
 
 function GameController:tryAndGetPigeon(point)
-    if self:isStateRun() then
+    if isStateRun() then
         local pigeons = self:getAllPigionsInPoint(point)
 
         if #pigeons > 0 then
@@ -135,9 +121,7 @@ end
 function GameController:draw()
     self:drawStageScreen()
 
-    if self:isStateMenu() then
-        self:drawMenuScreen()
-    elseif self:isStateGameOver() then
+    if isStateGameOver() then
         self:drawGameOverScreen()
     end
 
@@ -164,9 +148,6 @@ function GameController:drawStageScreen()
     end
 
     self.game_hud:draw()
-end
-
-function GameController:drawMenuScreen()
 end
 
 function GameController:drawGameOverScreen()

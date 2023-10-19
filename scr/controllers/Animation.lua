@@ -80,7 +80,6 @@ end
 ---------------------------------------------------------------
 function Animation:draw()
     --love.graphics.draw(self.sprite_sheet, self.quads[self.sprit_index], 0, 0, 0, 4)
-
     love.graphics.draw(self.sprite_sheet, self.quads[self.sprit_index], self.game_object.position.x, self.game_object.position.y, 0, self.scale_x, 1, self.offset_x)
 end
 

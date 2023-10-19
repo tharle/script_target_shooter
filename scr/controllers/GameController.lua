@@ -87,11 +87,11 @@ end
 
 function GameController:tryAndGetPigeon(point)
     if isStateRun() then
-        local pigeons = self:getAllPigionsInPoint(point)
+        local pigeons_keys_collided = self:getAllPigionsInPoint(point)
 
-        if #pigeons > 0 then
-            local pigeon = pigeons[1]
-            pigeon = table.remove(self.pigeons, pigeon.index)
+        if #pigeons_keys_collided > 0 then
+            local pigeon_key = pigeons_keys_collided[1] -- prends le preimier
+            pigeon = table.remove(self.pigeons, pigeon_key)
             self.cage:addPiegon(pigeon)
         else
             self.miss_click = self.miss_click + 1
@@ -110,17 +110,17 @@ end
 
 -- @param point (table: Vector) : point de collision
 function GameController:getAllPigionsInPoint(point)
-    local pigeons_collided = {}
+    local pigeons_keys_collided = {}
     local size = 0
 
     for key, pigeon in ipairs(self.pigeons) do
         if pigeon:isCollide(point) then
             size = size + 1
-            pigeons_collided[size] = pigeon
+            pigeons_keys_collided[size] = key
         end
     end
 
-    return pigeons_collided
+    return pigeons_keys_collided
 end
 
 function GameController:getFinalScore()

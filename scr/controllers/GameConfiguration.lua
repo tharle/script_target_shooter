@@ -17,7 +17,7 @@ function GameConfiguration.new()
 
     o.title = "CATH THE PIGEON"
     o.level = 5
-    o.timer_start = 40
+    o.timer_start = 1
     o.gun_magazine_size = 5
     o.resolution = Vector.new(CONFIG_RESOLUTION_WIDTH, CONFIG_RESOLUTION_HEIGHT)
     o.resolution_hud = Vector.new(CONFIG_RESOLUTION_WIDTH, 50)

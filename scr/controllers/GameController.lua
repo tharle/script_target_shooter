@@ -10,6 +10,8 @@ local GameHud = require("scr.controllers.GameHud")
 local Player = require("scr.controllers.Player")
 local SpawnerPigeons = require("scr.controllers.SpawnerPigeons")
 
+local GameOverScreen = require("scr.screens.GameOverScreen")
+
 -- Meta class
 local GameController = {}
 GameController.__index = GameController
@@ -40,10 +42,10 @@ function GameController.new()
 
     o.player = Player.new(o)
     o.cage = Cage.new(Vector.new(300, 450), o.game_configuration.pigeon_width, o.game_configuration.pigeon_height);
-    o.score = 0
     o.timer = o.game_configuration.timer_start
     o.game_state = GameState:stateRun()
-    o.gun_magazine = o.game_configuration.gun_magazine_size
+
+    o.game_over_screen = GameOverScreen.new(o)
 
     setmetatable(o, GameController)     
 
@@ -168,6 +170,7 @@ function GameController:drawMenuScreen()
 end
 
 function GameController:drawGameOverScreen()
+    self.game_over_screen:draw()
 end
 
 return GameController

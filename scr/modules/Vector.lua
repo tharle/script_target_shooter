@@ -91,6 +91,7 @@ end
 -- CONSTANTS DES VECTORS PRÉDEFINIS
 -- -------------------------------------------------------------------------
 function Vector:Zero()
+    -- comentaire
     return Vector.new()
 end
 
